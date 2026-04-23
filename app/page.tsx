@@ -29,10 +29,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen" style={{ background: '#F9FAFB' }}>
+    <div className="flex flex-col items-center justify-center min-h-screen px-4" style={{ background: '#F9FAFB' }}>
       <div
-        className="bg-white p-8 w-[500px]"
-        style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.10)', borderRadius: '2rem' }}
+        className="p-6 sm:p-8 w-full max-w-[500px]"
       >
         {/* 로고 */}
         <img src="/logo2.png" alt="야자 로고" className="mx-auto mt-5 mb-4 h-16 w-auto" />
@@ -43,15 +42,15 @@ export default function LoginPage() {
           경소마고 야자 현황 체크
         </p>
 
-        <form onSubmit={handleLogin} className="flex flex-col items-center">
+        <form onSubmit={handleLogin} className="flex flex-col items-center w-full">
           {/* 아이디 */}
-          <div className="mb-[30px]">
+          <div className="mb-[30px] w-full">
             <label className="block mb-1 text-sm font-medium" style={{ color: 'rgba(0,0,0,0.6)' }}>아이디</label>
             <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-[400px] h-[47px] outline-none transition-all"
+              className="w-full h-[47px] outline-none transition-all"
               style={{
                 background: 'transparent',
                 border: 'none',
@@ -64,14 +63,14 @@ export default function LoginPage() {
           </div>
 
           {/* 비밀번호 */}
-          <div className="mb-[30px]">
+          <div className="mb-[30px] w-full">
             <label className="block mb-1 text-sm font-medium" style={{ color: 'rgba(0,0,0,0.6)' }}>비밀번호</label>
-            <div className="relative">
+            <div className="relative w-full">
               <input
                 type={showPw ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pr-10 w-[400px] h-[47px] outline-none transition-all"
+                className="pr-10 w-full h-[47px] outline-none transition-all"
                 style={{
                   background: 'transparent',
                   border: 'none',
@@ -96,7 +95,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-[7px] w-[400px] h-[47px] font-bold text-white flex items-center justify-center gap-2 transition"
+            className="mt-[7px] w-full h-[47px] font-bold text-white flex items-center justify-center gap-2 transition"
             style={{
               background: 'var(--brand)',
               borderRadius: '10px',

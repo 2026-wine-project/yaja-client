@@ -76,14 +76,14 @@ export default function AdminHistoryPage() {
               <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
                 {checkedRecords.map((r) => (
                   <div key={r.id} className="px-4 py-3 flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: 'var(--text-1)' }}>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium truncate" style={{ color: 'var(--text-1)' }}>
                         {r.studentName}
                         <span className="ml-2 text-xs font-normal" style={{ color: 'var(--text-3)' }}>{r.grade}학년 {r.classNum}반</span>
                       </p>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs" style={{ color: 'var(--text-2)' }}>
-                        <MapPin className="w-3 h-3" />
-                        {r.buildingName} {r.floorLabel} · {r.roomName}
+                      <div className="flex items-center gap-1.5 mt-1 text-xs min-w-0" style={{ color: 'var(--text-2)' }}>
+                        <MapPin className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">{r.buildingName} {r.floorLabel} · {r.roomName}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-1 text-xs px-2 py-1 rounded-lg flex-shrink-0"

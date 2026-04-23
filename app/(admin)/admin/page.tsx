@@ -55,25 +55,25 @@ export default function AdminDashboard() {
 
       {/* 통계 카드 */}
       {loading ? (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="rounded-2xl p-5 animate-pulse" style={{ background: 'var(--surface-1)', border: '1px solid var(--border)', height: 110 }} />
+            <div key={i} className="rounded-2xl p-3 sm:p-5 animate-pulse" style={{ background: 'var(--surface-1)', border: '1px solid var(--border)', height: 100 }} />
           ))}
         </div>
       ) : stats && (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {[
             { label: '전체 학생', value: stats.total, sub: '명 등록', icon: Users, color: 'var(--text-1)', bg: 'var(--surface-1)', iconBg: 'var(--surface-2)' },
             { label: '체크 완료', value: stats.checked, sub: `명 · ${checkRate}%`, icon: CheckCircle2, color: 'var(--success)', bg: 'var(--success-light)', iconBg: '#bbf7d0' },
             { label: '미체크', value: stats.unchecked, sub: `명 · ${100 - checkRate}%`, icon: AlertCircle, color: 'var(--warn)', bg: 'var(--warn-light)', iconBg: '#fde68a' },
           ].map((s) => (
-            <div key={s.label} className="rounded-2xl p-4 flex flex-col gap-3" style={{ background: s.bg, border: '1px solid var(--border)' }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: s.iconBg }}>
-                <s.icon className="w-5 h-5" style={{ color: s.color }} />
+            <div key={s.label} className="rounded-2xl p-3 sm:p-4 flex flex-col gap-2 sm:gap-3" style={{ background: s.bg, border: '1px solid var(--border)' }}>
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center" style={{ background: s.iconBg }}>
+                <s.icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: s.color }} />
               </div>
               <div>
-                <p className="text-3xl font-bold leading-none" style={{ color: s.color }}>{s.value}</p>
-                <p className="text-xs mt-1.5" style={{ color: 'var(--text-2)' }}>{s.label} {s.sub}</p>
+                <p className="text-2xl sm:text-3xl font-bold leading-none" style={{ color: s.color }}>{s.value}</p>
+                <p className="text-[10px] sm:text-xs mt-1.5 leading-tight" style={{ color: 'var(--text-2)' }}>{s.label}<br className="sm:hidden" /><span className="hidden sm:inline"> </span>{s.sub}</p>
               </div>
             </div>
           ))}

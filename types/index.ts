@@ -47,6 +47,7 @@ export interface CheckRecord {
   floorLabel: string;
   checkedAt: string;
   status: CheckStatus;
+  reason?: string;
 }
 
 export interface DailyStats {

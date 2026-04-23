@@ -50,7 +50,9 @@ export async function getTodayRecordAPI(studentId: string, date: string): Promis
 export async function submitCheckAPI(
   studentId: string,
   date: string,
-  roomId: string
+  roomId: string,
+  reason?: string,
+  customLocation?: string
 ): Promise<CheckRecord> {
   await delay(300);
   const student = MOCK_USERS.find((u) => u.id === studentId)!;
@@ -61,7 +63,7 @@ export async function submitCheckAPI(
         name: `${student.grade}학년 ${student.classNum}반 교실`,
         floorId: 'floor-classroom',
         buildingId: 'building-classroom',
-        buildingName: '내 교실',
+        buildingName: '교실',
         floorLabel: `${student.grade}학년 ${student.classNum}반`,
       }
     : null);
@@ -69,15 +71,17 @@ export async function submitCheckAPI(
 
   const now = new Date();
   const checkedAt = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const roomName = customLocation ?? room.name;
 
   const existing = runtimeRecords.find((r) => r.studentId === studentId && r.date === date);
   if (existing) {
     existing.roomId = room.id;
-    existing.roomName = room.name;
+    existing.roomName = roomName;
     existing.buildingName = room.buildingName;
     existing.floorLabel = room.floorLabel;
     existing.checkedAt = checkedAt;
     existing.status = 'checked';
+    existing.reason = reason;
     return { ...existing };
   }
 
@@ -89,11 +93,12 @@ export async function submitCheckAPI(
     classNum: student.classNum ?? 0,
     date,
     roomId: room.id,
-    roomName: room.name,
+    roomName,
     buildingName: room.buildingName,
     floorLabel: room.floorLabel,
     checkedAt,
     status: 'checked',
+    reason,
   };
   runtimeRecords.push(newRecord);
   return newRecord;
