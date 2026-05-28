@@ -1,14 +1,27 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Users, Building2, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
-import { MOCK_USERS, MOCK_BUILDINGS } from '@/lib/mock/data';
+import { getBuildingsAPI, getStudentsAPI } from '@/lib/api';
+import { User, Building } from '@/types';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<'students' | 'buildings'>('students');
-  const [expandedBuilding, setExpandedBuilding] = useState<string | null>('building-1');
+  const [expandedBuilding, setExpandedBuilding] = useState<string | null>(null);
+  const [students, setStudents] = useState<User[]>([]);
+  const [buildings, setBuildings] = useState<Building[]>([]);
 
-  const students = MOCK_USERS.filter((u) => u.role === 'student');
+  useEffect(() => {
+    getStudentsAPI()
+      .then((data) => setStudents(data.filter((u) => u.role === 'student')))
+      .catch(() => toast.error('학생 목록을 불러오지 못했습니다.'));
+    getBuildingsAPI()
+      .then((data) => {
+        setBuildings(data);
+        setExpandedBuilding(data[0]?.id ?? null);
+      })
+      .catch(() => toast.error('장소 목록을 불러오지 못했습니다.'));
+  }, []);
 
   return (
     <div className="flex flex-col gap-5 max-w-2xl">
@@ -80,7 +93,7 @@ export default function SettingsPage() {
       {activeTab === 'buildings' && (
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold" style={{ color: 'var(--text-1)' }}>건물 {MOCK_BUILDINGS.length}개</p>
+            <p className="text-sm font-semibold" style={{ color: 'var(--text-1)' }}>건물 {buildings.length}개</p>
             <button onClick={() => toast.info('실제 구현 시 건물 추가 기능이 연결됩니다.')}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium"
               style={{ background: 'var(--brand-light)', color: 'var(--brand)', border: '1px solid var(--brand-mid)' }}>
@@ -89,7 +102,7 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          {MOCK_BUILDINGS.map((b) => {
+          {buildings.map((b) => {
             const expanded = expandedBuilding === b.id;
             const totalRooms = b.floors.reduce((acc, f) => acc + f.rooms.length, 0);
             return (
