@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'https://api.yaja.example.com/v1',
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'http://3.39.236.217:8080',
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });

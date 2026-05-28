@@ -22,9 +22,9 @@ export const fetchTodayRecord = createAsyncThunk(
 
 export const submitCheck = createAsyncThunk(
   'check/submit',
-  async ({ studentId, date, roomId }: { studentId: string; date: string; roomId: string }, { rejectWithValue }) => {
+  async ({ studentId, date, roomId, reason, customLocation }: { studentId: string; date: string; roomId: string; reason?: string; customLocation?: string }, { rejectWithValue }) => {
     try {
-      return await submitCheckAPI(studentId, date, roomId);
+      return await submitCheckAPI(studentId, date, roomId, reason, customLocation);
     } catch (e: unknown) {
       return rejectWithValue(e instanceof Error ? e.message : '체크 실패');
     }

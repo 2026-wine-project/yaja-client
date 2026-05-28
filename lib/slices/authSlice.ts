@@ -13,7 +13,11 @@ export const loginThunk = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      return await loginAPI(email, password);
+      const { accessToken, user } = await loginAPI(email, password);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('accessToken', accessToken);
+      }
+      return user;
     } catch (e: unknown) {
       return rejectWithValue(e instanceof Error ? e.message : '로그인 실패');
     }
