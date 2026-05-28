@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, User } from '@/types';
-import { loginAPI } from '@/lib/mock/api';
+import { loginAPI } from '@/lib/api';
 
 const initialState: AuthState = {
   user: null,
@@ -48,8 +48,11 @@ const authSlice = createSlice({
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isAuthenticated = true;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('accessToken', action.payload.accessToken);
+        }
       })
       .addCase(loginThunk.rejected, (state, action) => {
         state.loading = false;

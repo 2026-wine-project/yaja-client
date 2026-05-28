@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { CheckCircle2, Loader2, Building2, ChevronRight, GraduationCap } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
 import { submitCheck, fetchTodayRecord } from '@/lib/slices/checkSlice';
-import { getBuildingsAPI } from '@/lib/mock/api';
+import { getBuildingsAPI } from '@/lib/api';
 import { Building, Room } from '@/types';
 
 const CLASSROOM_BUILDING_ID = 'building-classroom';
