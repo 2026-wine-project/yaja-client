@@ -15,6 +15,13 @@ export async function logoutAPI(): Promise<void> {
   await axios.post('/auth/logout');
 }
 
+// ─── Students ────────────────────────────────────────────────────────────────
+
+export async function getStudentsAPI(): Promise<User[]> {
+  const res = await axios.get('/students');
+  return res.data.data;
+}
+
 // ─── Buildings ───────────────────────────────────────────────────────────────
 
 export async function getBuildingsAPI(): Promise<Building[]> {
@@ -36,9 +43,16 @@ export async function getTodayRecordAPI(
 export async function submitCheckAPI(
   studentId: string,
   date: string,
-  roomId: string
+  roomId: string,
+  reason?: string,
+  customLocation?: string
 ): Promise<CheckRecord> {
-  const res = await axios.post(`/students/${studentId}/check`, { date, roomId });
+  const res = await axios.post(`/students/${studentId}/check`, {
+    date,
+    roomId,
+    ...(reason ? { reason } : {}),
+    ...(customLocation ? { customLocation } : {}),
+  });
   return mapRecord(res.data.data);
 }
 
